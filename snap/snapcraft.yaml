@@ -37,7 +37,25 @@
         - rdiff-backup
         - libgcc1
         - libqt4-network
+        - libqtdbus4
         - libqt4-test
         - libqtcore4
+        - libglib2.0-0
+        - zlib1g
         - libqtgui4
+        - fontconfig
+        - libaudio2
+        - libfontconfig1
+        - libfreetype6
+        - libice6
+        - libjpeg8
+        - libmng2
+        - libpng12-0
+        - libqt4-declarative
+        - libsm6
+        - libtiff5
+        - libx11-6
+        - libxext6
+        - libxi6
+        - libxrender1
         - libstdc++6
