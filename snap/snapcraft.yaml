@@ -1,19 +1,35 @@
 
   name: test-1984
-  version: '0.7'
-  summary: Troubleshoot connection problems for Telecel modems in CAR.
+  version: '1.0'
+  summary: A simple backup GUI for version backups to an external USB device.
+
   description: |
-    Simple non-gui app to troubleshoot connection problems for Telecel
-    modems in CAR.
+    Wasta-Backup will auto-launch when a USB device with a previous
+    Wasta-Backup on it is inserted.
+
+    Restore possibilities include restoring previous versions of existing
+    files or folders as well as restoring deleted files or folders from the
+    backup device. In the case of restoring previous versions of existing
+    items, the current item is first renamed using the current date and time.
+
+    Additionally, a 'Restore ALL' option is available that will replace all
+    data on the computer from the backup device.
+
+    The following configurable settings are stored in a user's
+    ~/.config/wasta-backup/ directory
+        + backupDirs.txt - specifies directories to backup and other parameters
+          such as number of versions to keep
+        + backupInclude.txt - specifies file extensions to backup (so files
+          with media extensions, etc., will be politely ignored)
 
   grade: devel # must be 'stable' to release into candidate/stable channels
   confinement: devmode # use 'strict' once you have the right plugs and slots
 
   apps:
-    ModemCheck:
-      command: ModemCheck
+    wasta-backup:
+      command: wasta-backup
 
   parts:
-    modem-check:
+    wasta-backup:
       plugin: dump
       source: .
