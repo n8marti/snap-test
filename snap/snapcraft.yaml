@@ -33,3 +33,11 @@
     wasta-backup:
       plugin: dump
       source: .
+      build-packages:
+        - rdiff-backup
+        - libgcc1
+        - libqt4-network
+        - libqt4-test
+        - libqtcore4
+        - libqtgui4
+        - libstdc++6
