@@ -39,5 +39,8 @@
       # See 'snapcraft plugins'
       plugin: autotools
       source: .
+      build-packages:
+        - g++
+        - make
   
 
