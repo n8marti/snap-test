@@ -1,6 +1,6 @@
 
   name: test-1984
-  version: '0.6'
+  version: '0.7'
   summary: Troubleshoot connection problems for Telecel modems in CAR.
   description: |
     Simple non-gui app to troubleshoot connection problems for Telecel
