@@ -12,8 +12,8 @@
   parts:
     modem-check:
       # See 'snapcraft plugins'
-      plugin: python3
-      source: modem-check/.
+      plugin: python
+      source: https://github.com/n8marti/modem-check.git
   
   apps:
     ModemCheck:
