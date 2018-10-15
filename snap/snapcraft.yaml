@@ -38,8 +38,6 @@
     wasta-backup:
       # See 'snapcraft plugins'
       plugin: autotools
-      source: https://github.com/wasta-linux/wasta-backup.git
-      build-packages:
-        - make
+      source: .
   
 
