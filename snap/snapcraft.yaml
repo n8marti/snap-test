@@ -27,7 +27,7 @@
 
   apps:
     wasta-backup:
-      command: desktop-launch wasta-backup
+      command: desktop-launch /wasta-backup
 
   parts:
     wasta-backup:
