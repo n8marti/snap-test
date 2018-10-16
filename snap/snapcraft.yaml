@@ -33,8 +33,7 @@
     wasta-backup:
       plugin: dump
       source: .
-      after: [desktop-qt4]
-      build-packages:
+      stage-packages:
         - rdiff-backup
         - libgcc1
         - libqt4-network
