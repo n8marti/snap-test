@@ -27,7 +27,9 @@
 
   apps:
     wasta-backup:
-      command: desktop-launch wasta-backup --configdir $SNAP_USER_DATA
+      command: desktop-launch wasta-backup
+      environment:
+        "HOME": "$SNAP_USER_COMMON"
 
   parts:
     wasta-backup:
