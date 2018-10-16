@@ -35,13 +35,14 @@
       source: .
       after: [desktop-qt4]
       stage-packages:
-        - rdiff-backup
         - libgcc1
         - libqt4-network
         - libqtdbus4
         - libqt4-test
         - libqtcore4
         - libglib2.0-0
-        - zlib1g
         - libqtgui4
         - libstdc++6
+        - rdiff-backup
+        - rsync
+        - zlib1g
