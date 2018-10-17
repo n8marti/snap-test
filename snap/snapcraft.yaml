@@ -30,6 +30,11 @@
       command: desktop-launch wasta-backup
       environment:
         "HOME": "$SNAP_USER_COMMON"
+      plugs:
+        - home
+        - desktop-legacy
+        - unity7
+        - removable-media
 
   parts:
     wasta-backup:
