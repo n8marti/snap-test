@@ -37,6 +37,8 @@
       source: .
       after: [desktop-qt4]
       stage-packages:
+        - libatk-adaptor
+        - libgail-common
         - libgcc1
         - libqt4-network
         - libqtdbus4
