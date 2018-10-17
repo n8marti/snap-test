@@ -48,7 +48,7 @@
         add-apt-repository --yes ppa:wasta-linux/wasta-apps
         apt-get update
         apt-get upgrade
-        apt-get install --yes --quiet wasta-backup
+        apt-get install --yes wasta-backup
 
 #    wasta-backup:
 #      plugin: dump
