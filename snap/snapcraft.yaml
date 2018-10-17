@@ -31,7 +31,7 @@
     wasta-backup:
       command: desktop-launch wasta-backup
       environment:
-        "HOME": "$SNAP_USER_COMMON"
+        "HOME": "$SNAP_USER_DATA"
       plugs:
         - home
         - removable-media
