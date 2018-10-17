@@ -40,9 +40,9 @@
   parts:
     add-ppas:
       plugin: nil
-      prepare: |
+      override-build: |
         apt-get update
-        apt-get install software-properties-common
+        apt-get install software-properties-common --yes
         add-apt-repository --yes ppa:wasta-linux/wasta
         add-apt-repository --yes ppa:wasta-linux/wasta-apps
         apt-get update
