@@ -41,6 +41,8 @@
     add-ppas:
       plugin: nil
       prepare: |
+        apt-get update
+        apt-get install software-properties-common
         add-apt-repository --yes ppa:wasta-linux/wasta
         add-apt-repository --yes ppa:wasta-linux/wasta-apps
         apt-get update
