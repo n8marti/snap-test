@@ -32,6 +32,7 @@
       command: desktop-launch wasta-backup
       environment:
         "HOME": "$SNAP_USER_DATA"
+        "XDG_CONFIG_HOME": "$SNAP_USER_DATA/.config"
       plugs:
         - home
         - removable-media
