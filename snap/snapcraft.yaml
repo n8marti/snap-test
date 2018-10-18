@@ -49,12 +49,15 @@
         apt-get update
         apt-get upgrade
         apt-get install --yes wasta-backup
-        which wasta-backup
 
-#    wasta-backup:
-#      plugin: dump
-#      source: .
-#      after: [desktop-qt4, add-ppas]
+    wasta-backup:
+      plugin: nil
+      organize:
+        snap/*/current/usr/bin/*: /usr/bin/
+        snap/*/current/usr/share/*: /usr/share
+        snap/*/current/lib/udev/rules.d/*: /lib/udev/rules.d/
+        SNAP_USER_DATA/.config: /home/$USER/.config
+      after: [desktop-qt4, add-ppas]
 #      stage-packages:
 #        - libatk-adaptor
 #        - libgail-common
