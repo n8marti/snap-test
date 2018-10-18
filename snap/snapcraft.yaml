@@ -49,6 +49,7 @@
         apt-get update
         apt-get upgrade
         apt-get install --yes wasta-backup
+        which wasta-backup
 
 #    wasta-backup:
 #      plugin: dump
