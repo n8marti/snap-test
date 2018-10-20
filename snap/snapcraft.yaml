@@ -54,7 +54,7 @@
       organize:
         usr/bin/wasta-backup: $SNAP/usr/bin/wasta-backup
         /home/$USER/.config: SNAP_USER_DATA/.config
-      after: [add-ppas]
+      after: [add-ppas, rdiff-backup]
       stage-packages:
         - wasta-backup
 #        - libatk-adaptor
@@ -70,6 +70,8 @@
 #        - rdiff-backup
 #        - rsync
 #        - zlib1g
+      prepare: |
+        chmod 771 ./var/spool/cron/at*
 
 #    at:
 #      plugin: nil
