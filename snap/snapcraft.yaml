@@ -72,7 +72,7 @@
 #        - zlib1g
 #      override-stage: |
 #        find / -name 'at*' -exec rm -rf '{}' \; 2</dev/null
-      install: |
+      override-build: |
         rm -rf /var/spool/cron/at*
 
 #    at:
