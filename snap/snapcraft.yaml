@@ -29,14 +29,14 @@ parts:
   saymore:
     source: https://github.com/sillsdev/saymore.git
     plugin: nil
-    # build-packages:
-    #   - curl
+    build-packages:
+      - wget
+    build-snaps:
+      - dotnet-sdk
     # override-pull: |
     #   snapcraftctl pull
     #   build/getDependencies-windows.sh
     override-build: |
       dotnet build SayMore.sln
-    build-snaps:
-      - dotnet-sdk
     stage-snaps:
       - dotnet-runtime-50
