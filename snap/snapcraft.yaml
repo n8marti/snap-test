@@ -29,8 +29,8 @@ parts:
   saymore:
     source: https://github.com/sillsdev/saymore.git
     plugin: dotnet
-    dotnet-version: 4.7
-    dotnet-runtime-version: 4.7.1
+    # dotnet-version: 4.7
+    # dotnet-runtime-version: 4.7.1
     build-attributes:
       - debug
     # build-packages:
