@@ -36,13 +36,13 @@ parts:
       - dotnet-sdk
     # override-pull: |
     #   snapcraftctl pull
-    #   # build/getDependencies-windows.sh
+    #   mv build/src/SayMore
     override-build: |
-      mkdir -p build/.nuget
-      wget -P build/.nuget https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
-      mv build/.nuget/nuget.exe build/.nuget/NuGet.exe
+      # mkdir -p build/.nuget
+      # wget -P build/.nuget https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
+      # mv build/.nuget/nuget.exe build/.nuget/NuGet.exe
       # chmod +x build/.nuget/nuget.exe
-      dotnet build --runtime ubuntu.18.04-x64 SayMore.sln
+      dotnet build --runtime ubuntu.18.04-x64 src/SayMore/
     stage-packages:
       - mono-runtime
     stage-snaps:
