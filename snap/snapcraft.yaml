@@ -36,5 +36,7 @@ parts:
     #   build/getDependencies-windows.sh
     override-build: |
       dotnet build SayMore.sln
+    build-snaps:
+      - dotnet-sdk
     stage-snaps:
       - dotnet-runtime-50
