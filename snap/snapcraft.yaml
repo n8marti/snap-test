@@ -28,7 +28,7 @@ apps:
 parts:
   saymore:
     source: https://github.com/sillsdev/saymore.git
-    # plugin: dotnet
+    plugin: nil
     # build-packages:
     #   - curl
     # override-pull: |
