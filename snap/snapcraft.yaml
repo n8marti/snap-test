@@ -28,22 +28,26 @@ apps:
 parts:
   saymore:
     source: https://github.com/sillsdev/saymore.git
-    plugin: nil
-    build-packages:
-      - mono-devel
-      - wget
-    build-snaps:
-      - dotnet-sdk
-    override-pull: |
-      snapcraftctl pull
-      # Add ReferenceAssemblies to SayMore.csproj.
-      pkg_ref='<PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />'
-      sed -i 's|  <ItemGroup>|  <ItemGroup>\n    '"$pkg_ref"'|' src/SayMore/SayMore.csproj
-    override-build: |
-      # dotnet add src/SayMore/SayMore.csproj package Microsoft.NETFramework.ReferenceAssemblies --version 1.0.2
-      dotnet restore src/SayMore/
-      dotnet build --runtime ubuntu.18.04-x64 src/SayMore/
-    stage-packages:
-      - mono-runtime
-    stage-snaps:
-      - dotnet-runtime-50
+    plugin: dotnet
+    dotnet-version: 4.7
+    dotnet-runtime-version: 4.7.1
+    build-attributes:
+      - debug
+    # build-packages:
+    #   - mono-devel
+      # - wget
+    # build-snaps:
+      # - dotnet-sdk
+    # override-pull: |
+    #   snapcraftctl pull
+    #   # Add ReferenceAssemblies to SayMore.csproj.
+    #   pkg_ref='<PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />'
+    #   sed -i 's|  <ItemGroup>|  <ItemGroup>\n    '"$pkg_ref"'|' src/SayMore/SayMore.csproj
+    # override-build: |
+    #   # dotnet add src/SayMore/SayMore.csproj package Microsoft.NETFramework.ReferenceAssemblies --version 1.0.2
+    #   dotnet restore src/SayMore/
+    #   dotnet build --runtime ubuntu.18.04-x64 src/SayMore/
+    # stage-packages:
+    #   - mono-runtime
+    # stage-snaps:
+    #   - dotnet-runtime-50
