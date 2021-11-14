@@ -40,7 +40,7 @@ parts:
     #   pkg_ref='<PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />'
     #   sed -i 's|  <ItemGroup>|  <ItemGroup>\n    '"$pkg_ref"'|' src/SayMore/SayMore.csproj
     override-build: |
-      dotnet add package Microsoft.NETFramework.ReferenceAssemblies --version 1.0.2
+      dotnet add src/SayMore/SayMore.csproj package Microsoft.NETFramework.ReferenceAssemblies --version 1.0.2
       dotnet restore src/SayMore/
       dotnet build --runtime ubuntu.18.04-x64 src/SayMore/
     stage-packages:
