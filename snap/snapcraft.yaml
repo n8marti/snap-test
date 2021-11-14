@@ -33,6 +33,7 @@ parts:
       - curl
     override-pull: |
       snapcraftctl pull
+      chmod +x build/getDependencies-windows.sh
       build/getDependencies-windows.sh
     stage-snaps:
       - dotnet-runtime-50
