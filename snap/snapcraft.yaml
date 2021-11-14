@@ -37,10 +37,10 @@ parts:
     override-pull: |
       mkdir -p build/.nuget
       wget -P build/.nuget https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
-      snapcraftctl pull
-    #   build/getDependencies-windows.sh
+      # snapcraftctl pull
+      # build/getDependencies-windows.sh
     override-build: |
-      chmod +x build/.nuget/nuget.exe
+      # chmod +x build/.nuget/nuget.exe
       # mv build/.nuget/nuget.exe build/.nuget/NuGet.exe
       dotnet build SayMore.sln
     stage-packages:
