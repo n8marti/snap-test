@@ -38,6 +38,8 @@ parts:
     #   snapcraftctl pull
     #   build/getDependencies-windows.sh
     override-build: |
+      # chmod +x build/.nuget/nuget.exe
+      mv build/.nuget/nuget.exe build/.nuget/NuGet.exe
       dotnet build SayMore.sln
     stage-packages:
       - mono-runtime
