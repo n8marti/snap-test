@@ -1,86 +1,31 @@
 
-  name: test-1984
-  version: '1.0'
-  summary: A simple backup GUI for version backups to an external USB device.
+name: test-1984
+version: '1.0'
+summary: This is a shell project for testing packaging viability.
 
-  description: |
-    Wasta-Backup will auto-launch when a USB device with a previous
-    Wasta-Backup on it is inserted.
+description: |
+  This is a shell project for testing packaging viability.
 
-    Restore possibilities include restoring previous versions of existing
-    files or folders as well as restoring deleted files or folders from the
-    backup device. In the case of restoring previous versions of existing
-    items, the current item is first renamed using the current date and time.
+grade: devel # must be 'stable' to release into candidate/stable channels
+confinement: devmode # use 'strict' once you have the right plugs and slots
+architectures:
+  - amd64
+# layout:
 
-    Additionally, a 'Restore ALL' option is available that will replace all
-    data on the computer from the backup device.
+apps:
+  saymore:
+    command: bin/saymore
+    # environment:
+    extensions:
+      - gnome-3-28
+    plugs:
+      - dotnet-runtime-50:dotnet-runtime
+      - home
+      - network
+      - removable-media
 
-    The following configurable settings are stored in a user's
-    ~/.config/wasta-backup/ directory
-        + backupDirs.txt - specifies directories to backup and other parameters
-          such as number of versions to keep
-        + backupInclude.txt - specifies file extensions to backup (so files
-          with media extensions, etc., will be politely ignored)
-
-  grade: devel # must be 'stable' to release into candidate/stable channels
-  confinement: devmode # use 'strict' once you have the right plugs and slots
-  architectures:
-    - amd64
-
-  apps:
-    wasta-backup:
-      command: desktop-launch $SNAP/usr/bin/wasta-backup
-      environment:
-        "HOME": "$SNAP_USER_DATA"
-        "XDG_CONFIG_HOME": "$SNAP_USER_DATA/.config"
-      plugs:
-        - home
-        - removable-media
-
-  parts:
-    add-ppas:
-      plugin: nil
-      after: [desktop-qt4]
-      override-build: |
-        apt-get update
-        apt-get install software-properties-common --yes
-        add-apt-repository --yes ppa:wasta-linux/wasta
-        add-apt-repository --yes ppa:wasta-linux/wasta-apps
-        apt-get update
-        apt-get upgrade
-
-    wasta-backup:
-      plugin: nil
-      organize:
-        usr/bin/wasta-backup: $SNAP/usr/bin/wasta-backup
-        /home/$USER/.config: SNAP_USER_DATA/.config
-      after: [add-ppas, rdiff-backup]
-      stage-packages:
-        - wasta-backup
-#        - libatk-adaptor
-#        - libgail-common
-#        - libgcc1
-#        - libqt4-network
-#        - libqtdbus4
-#        - libqt4-test
-#        - libqtcore4
-#        - libglib2.0-0
-#        - libqtgui4
-#        - libstdc++6
-#        - rdiff-backup
-#        - rsync
-#        - zlib1g
-#      override-stage: |
-#        find / -name 'at*' -exec rm -rf '{}' \; 2</dev/null
-      override-build: |
-        rm -rf /var/spool/cron/at*
-
-#    at:
-#      plugin: nil
-#      stage-packages:
-#        - at
-
-    rdiff-backup:
-      plugin: nil
-      stage-packages:
-        - rdiff-backup
+parts:
+  saymore:
+    source: https://github.com/sillsdev/saymore
+    stage-snaps:
+      - dotnet-runtime-50
