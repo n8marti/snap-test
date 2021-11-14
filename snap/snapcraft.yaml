@@ -30,7 +30,7 @@ parts:
     source: https://github.com/sillsdev/saymore.git
     plugin: nil
     build-packages:
-      - mono-sil-dev
+      - mono-devel
       - wget
     build-snaps:
       - dotnet-sdk
@@ -40,6 +40,6 @@ parts:
     override-build: |
       dotnet build SayMore.sln
     stage-packages:
-      - mono-sil
+      - mono-runtime
     stage-snaps:
       - dotnet-runtime-50
