@@ -34,17 +34,13 @@ parts:
       - wget
     build-snaps:
       - dotnet-sdk
-    # override-pull: |
-    #   snapcraftctl pull
-    #   mv build/src/SayMore
-    override-build: |
-      # mkdir -p build/.nuget
-      # wget -P build/.nuget https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
-      # mv build/.nuget/nuget.exe build/.nuget/NuGet.exe
-      # chmod +x build/.nuget/nuget.exe
-      # dotnet add package Microsoft.NETFramework.ReferenceAssemblies --version 1.0.2
+    override-pull: |
+      snapcraftctl pull
+      # Add ReferenceAssemblies to SayMore.csproj.
       pkg_ref='<PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />'
       sed -i 's|  <ItemGroup>|  <ItemGroup>\n    '"$pkg_ref"'|' src/SayMore/SayMore.csproj
+    override-build: |
+      # dotnet add package Microsoft.NETFramework.ReferenceAssemblies --version 1.0.2
       dotnet restore src/SayMore/
       dotnet build --runtime ubuntu.18.04-x64 src/SayMore/
     stage-packages:
