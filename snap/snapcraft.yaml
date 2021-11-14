@@ -8,6 +8,7 @@ description: |
 
 grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: devmode # use 'strict' once you have the right plugs and slots
+base: core18
 architectures:
   - amd64
 # layout:
@@ -27,5 +28,14 @@ apps:
 parts:
   saymore:
     source: https://github.com/sillsdev/saymore
+    plugin: dotnet
+    build-packages:
+      - curl
     stage-snaps:
       - dotnet-runtime-50
+
+  saymore-help:
+    source: http://build.palaso.org/guestAuth/repository/download/bt76/latest.lastSuccessful/SayMore.chm
+    plugin: dump
+    organize:
+      SayMore.chm: DistFiles/SayMore.chm
