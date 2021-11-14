@@ -35,9 +35,9 @@ parts:
     build-snaps:
       - dotnet-sdk
     override-pull: |
+      snapcraftctl pull
       mkdir -p build/.nuget
       wget -P build/.nuget https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
-      # snapcraftctl pull
       # build/getDependencies-windows.sh
     override-build: |
       # chmod +x build/.nuget/nuget.exe
