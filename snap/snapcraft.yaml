@@ -31,11 +31,8 @@ parts:
     plugin: dotnet
     build-packages:
       - curl
+    override-pull: |
+      snapcraftctl pull
+      build/getDependencies-windows.sh
     stage-snaps:
       - dotnet-runtime-50
-
-  saymore-help:
-    source: http://build.palaso.org/guestAuth/repository/download/bt76/latest.lastSuccessful/SayMore.chm
-    plugin: dump
-    organize:
-      SayMore.chm: DistFiles/SayMore.chm
