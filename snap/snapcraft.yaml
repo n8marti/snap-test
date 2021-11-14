@@ -33,6 +33,7 @@ parts:
     # dotnet-runtime-version: 4.7.1
     build-attributes:
       - debug
+      - src/SayMore/
     # build-packages:
     #   - mono-devel
       # - wget
