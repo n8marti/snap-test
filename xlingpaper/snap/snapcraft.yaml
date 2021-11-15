@@ -1,0 +1,175 @@
+name: xlingpaper
+base: core18
+version: '3.9'
+summary: Produce linguistic documents with multiple outputs from one source document.
+description: |
+  This is an unofficial package.
+
+  XLingPaper is an add-on to XMLmind XML Editor.
+
+  XMLmind XML Editor is a strictly validating, near WYSIWYG, XML editor, having:
+  * Extensive DITA 1.3 support, including Lightweight DITA, XDITA, HDITA, MDITA.
+  * Extensive DocBook support, including DocBook 5.1 assemblies.
+  * Extensive XHTML5 support, including the ability to convert a set of HTML pages (an “ebook”) to EPUB, PDF, Web Help, DOCX, etc.
+
+grade: devel # must be 'stable' to release into candidate/stable channels
+confinement: strict
+architectures:
+  - amd64
+layout:
+  /opt/xxe-perso-8_2_0: # for xlingpaper part
+    symlink: $SNAP/opt/xxe-perso-8_2_0
+  /opt/texlivexlingpaper2020: # for texbin2020 part
+    symlink: $SNAP/opt/texlivexlingpaper2020
+  /usr/texbinxlingpaper2020: # for texbin2020 part
+    symlink: $SNAP/opt/texlivexlingpaper2020/bin/x86_64-linux
+  /usr/share/zenity: # for zenity part
+    symlink: $SNAP/usr/share/zenity
+  /usr/bin/lpr: # for lpr part
+    symlink: $SNAP/usr/bin/lpr
+
+apps:
+  xlingpaper:
+    command: bin/xlingpaper-wrapper.sh
+    environment:
+      JAVA_HOME: $SNAP/usr/lib/jvm/java-11-openjdk-amd64
+      PATH: $JAVA_HOME/bin:$PATH
+      XXE_PREFS_DIR: $SNAP_USER_DATA/.config
+    extensions:
+      - gnome-3-28
+    plugs:
+      - avahi-observe
+      - cups
+      - cups-control
+      - home
+      - network
+      - removable-media
+
+parts:
+  wrapper:
+    plugin: dump
+    source: scripts
+    organize:
+      xlingpaper-wrapper.sh: bin/xlingpaper-wrapper.sh
+
+  lpr: # for java-based printing
+    plugin: nil
+    stage-packages:
+      - cups-bsd
+    # prime:
+      # - usr/bin/lpr
+
+  xlingpaper:
+    plugin: dump
+    source: https://software.sil.org/downloads/r/xlingpaper/XLingPaper-3-9-0XXEPersonalEditionFullSetup.tar.gz
+    filesets:
+      excluded:
+        - -*.bat
+        - -**/*.bat
+        - -*.exe
+        - -**/*.exe
+        - -*.tar
+        - -**/*.tar
+        - -*.zip
+        - -**/*.zip
+        - -runxxe*
+        - -install4xxe*
+        - -opt/xxe-perso-8_2_0/examples/My_XLingPaper
+    build-packages:
+      - unzip
+    override-build: |
+      snapcraftctl build
+      xxe_base=$SNAPCRAFT_PART_INSTALL/opt/xxe-perso-8_2_0
+      # Part 1/6: Accept license: Partly handled by xlingpaper-wrapper.sh.
+      # Convert EULA TXT to PDF.
+      # pandoc ${xxe_base}/XXEPersonalAndXLingPaperLicense.txt -o ${xxe_base}/XXEPersonalAndXLingPaperLicense.pdf
+
+      # Part 2/6: Install XXE Personal.
+      tar --overwrite -xjf $SNAPCRAFT_PART_BUILD/XXE8-2Installer.tar
+      unzip -oq $SNAPCRAFT_PART_BUILD/XXE8Installer/xxe-perso-8_2_0.zip -d $SNAPCRAFT_PART_INSTALL/opt
+
+      # Part 3/6: Install XLingPaper config files.
+      addons=${xxe_base}/addon
+      mkdir -p -m777 "$addons"
+      tar --overwrite -xjf $SNAPCRAFT_PART_BUILD/xlingpaperconfig-xxe7.tar -C $addons
+      unzip -oq $SNAPCRAFT_PART_BUILD/XXE8Installer/es_dictionary-8_2_0.zip -d $addons
+      unzip -oq $SNAPCRAFT_PART_BUILD/XXE8Installer/fr_dictionary-8_2_0.zip -d $addons
+      unzip -oq $SNAPCRAFT_PART_BUILD/XXE8Installer/fr_translation-8_2_0 -d $addons
+      unzip -oq $SNAPCRAFT_PART_BUILD/XXE8Installer/sample_customize_xxe-8_2_0.zip -d $addons
+
+      # Part 4/6: Install texlive for XLingPaper: 64-bit version installed in own part.
+
+      # Part 5/6: Install XXE preferences: Handled partly by xlingpaper-wrapper.sh.
+      configs=${xxe_base}/config
+      mkdir -p -m777 "$configs"
+      cp $SNAPCRAFT_PART_BUILD/XXE8Installer/preferences.properties $configs
+
+      # Part 6/6: Install sample XLingPaper document.
+      mkdir -p -m777 ${xxe_base}/examples
+      tar --overwrite -xjf $SNAPCRAFT_PART_BUILD/XLingPaperSample.tar -C ${xxe_base}/examples
+      echo "text/xml=xxe.desktop" >> $SNAPCRAFT_PART_INSTALL/usr/share/applications/defaults.list
+    organize: # rename/move files after part is built but before staging
+      opt/xxe-perso-8_2_0/examples/My_XLingPaper/SamplePaper.xml: opt/xxe-perso-8_2_0/examples/
+      XXEPersonalAndXLingPaperLicense.txt: opt/xxe-perso-8_2_0/
+    stage:
+      - $excluded
+    stage-packages:
+      - openjdk-11-jre
+
+  # https://software.sil.org/xlingpaper/xelatex-package-from-tex-live-2020/
+  texbin2020:
+    after:
+      - xlingpaper
+    plugin: dump
+    source: http://software.sil.org/downloads/r/xlingpaper/resources/xelatex-upgrade/XeLaTeX2020Installer.tar.gz
+    override-build: |
+      snapcraftctl build
+      mkdir -p -m777 $SNAPCRAFT_PART_INSTALL/opt
+      tar --overwrite -xzf $SNAPCRAFT_PART_INSTALL/texlivexlingpaper2020.tar -C $SNAPCRAFT_PART_INSTALL/opt
+    # Set xelatex version during packaging so user doesn't have to.
+    # https://software.sil.org/xlingpaper/xelatex-package-from-tex-live-2020/
+    override-prime: |
+      snapcraftctl prime
+      xlp_dir=opt/xxe-perso-8_2_0/addon/XLingPap
+      xlp_config=${xlp_dir}/configuration
+      xlp_batch=${xlp_dir}/batchfiles
+      cp ${xlp_config}/XeLaTeXVersion2020.txt ${xlp_config}/XeLaTeXVersion.txt
+      cp ${xlp_batch}/DoTeXPDF2020 ${xlp_batch}/DoTeXPDF
+      cp ${xlp_batch}/HasXeLaTeX2020 ${xlp_batch}/HasXeLaTeX
+
+  # Integrate custom dialogs in your snap - doc - snapcraft.io
+  # https://forum.snapcraft.io/t/integrate-custom-dialogs-in-your-snap/10825
+  zenity:
+    plugin: nil
+    stage-packages:
+      - zenity
+    prime:
+      - usr/bin/zenity
+      - usr/share/zenity/*
+
+  # Weed out any remaining unwanted files.
+  # https://forum.snapcraft.io/t/reducing-the-size-of-desktop-snaps/17280
+  cleanup: # very slow, ~2 or 3 min.
+    after:
+      - lpr
+      - texbin2020
+      - wrapper
+      - xlingpaper
+      - zenity
+    plugin: nil
+    filesets:
+      excluded:
+        - -**/*.bat
+        - -**/*.tar
+        - -**/*.zip
+        # - -data-dir/* # doesn't work: gnome files are added after prime, it seems
+    prime:
+      - $excluded
+    build-snaps: [core18, gnome-3-28-1804]
+    override-prime: |
+      set -eux
+      for snap in "core18" "gnome-3-28-1804"; do
+        cd "/snap/$snap/current" && find . -type f,l -exec rm -f "$SNAPCRAFT_PRIME/{}" \;
+      done
+      cd $SNAPCRAFT_PRIME
+      chmod --recursive 755 .

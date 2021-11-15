@@ -1,0 +1,14 @@
+[Desktop Entry]
+Name=XLingPaper
+Comment=Edit XML Data using XmlMind XML Editor
+GenericName=XML Document editor
+GenericName[es]=Editor de archivos XML
+GenericName[fr]=Editeur de fichiers XML
+Exec=xlingpaper
+Path=${SNAP}/opt/xxe-perso-8_2_0/bin
+Icon=${SNAP}/meta/gui/xlingpaper.png
+MimeType=text/xml;
+Terminal=false
+Type=Application
+Categories=GTK;GNOME;Office;Education
+StartupNotify=false
