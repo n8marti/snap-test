@@ -25,8 +25,13 @@ parts:
     # build-snaps:
     #   - wine-platform-6-stable
     override-build: |
-      name=CardSorterWPF20211111
+      # Add 32-bit arch for wine.
+      dpkg --add-architecture i386
+      apt-get update
+      apt-get install wine32
+
+      # Run Setup.
       unzip CardSorterWPF20211111.zip
-      wine64 setup.exe # error: can't exec wineserver
+      wine64 setup.exe
     stage-snaps:
       - wine-platform-6-stable
