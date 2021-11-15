@@ -21,12 +21,12 @@ parts:
     source: .
     build-packages:
       - unzip
-      - wine64
+      - wine-stable
     # build-snaps:
     #   - wine-platform-6-stable
     override-build: |
       name=CardSorterWPF20211111
       unzip CardSorterWPF20211111.zip
-      wine64-stable setup.exe
+      wine64 setup.exe # error: can't exec wineserver
     stage-snaps:
       - wine-platform-6-stable
