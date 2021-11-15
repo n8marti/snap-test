@@ -27,8 +27,8 @@ parts:
     override-build: |
       # Add 32-bit arch for wine.
       dpkg --add-architecture i386
-      apt-get update
-      apt-get install wine32
+      apt-get update --yes
+      apt-get install wine32 --yes
 
       # Run Setup.
       unzip CardSorterWPF20211111.zip
