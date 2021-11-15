@@ -8,9 +8,24 @@ description: |
 grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: devmode # use 'strict' once you have the right plugs and slots
 
+apps:
+  cardsorter:
+    command: opt/wine-stable/bin/wine64 opt/bin/cardsorter
+
+  wine:
+    command: opt/wine-stable/bin/wine64
+
 parts:
   cardsorter:
     plugin: dump
     source: .
+    # build-packages:
+    #   - unzip
+    build-snaps:
+      - wine-platform-6-stable
+    override-build: |
+      name=CardSorterWPF20211111
+      unzip "${name}.zip"
+      opt/wine-stable/bin/wine64 "${name}/setup.exe"
     stage-snaps:
       - wine-platform-6-stable
