@@ -1,0 +1,16 @@
+name: cardsorter
+base: core18
+version: '0.1'
+summary: Sort words according to varous linguistic features
+description: |
+  Sort words according to varous linguistic features
+
+grade: devel # must be 'stable' to release into candidate/stable channels
+confinement: devmode # use 'strict' once you have the right plugs and slots
+
+parts:
+  cardsorter:
+    plugin: dump
+    source: .
+    stage-snaps:
+      - wine-platform-6-stable
