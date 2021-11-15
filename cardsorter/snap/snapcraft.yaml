@@ -27,6 +27,6 @@ parts:
     override-build: |
       name=CardSorterWPF20211111
       unzip CardSorterWPF20211111.zip
-      opt/wine-stable/bin/wine64 setup.exe
+      wine64-stable setup.exe
     stage-snaps:
       - wine-platform-6-stable
