@@ -21,11 +21,12 @@ parts:
     source: .
     build-packages:
       - unzip
-    build-snaps:
-      - wine-platform-6-stable
+      - wine64
+    # build-snaps:
+    #   - wine-platform-6-stable
     override-build: |
       name=CardSorterWPF20211111
-      unzip "${name}.zip"
-      opt/wine-stable/bin/wine64 "${name}/setup.exe"
+      unzip CardSorterWPF20211111.zip
+      opt/wine-stable/bin/wine64 setup.exe
     stage-snaps:
       - wine-platform-6-stable
