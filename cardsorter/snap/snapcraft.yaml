@@ -19,8 +19,8 @@ parts:
   cardsorter:
     plugin: dump
     source: .
-    # build-packages:
-    #   - unzip
+    build-packages:
+      - unzip
     build-snaps:
       - wine-platform-6-stable
     override-build: |
