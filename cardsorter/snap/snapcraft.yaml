@@ -32,6 +32,6 @@ parts:
 
       # Run Setup.
       unzip CardSorterWPF20211111.zip
-      wine64 setup.exe /quiet
+      wine64 setup.exe /s /v/qn
     stage-snaps:
       - wine-platform-6-stable
