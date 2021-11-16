@@ -10,6 +10,7 @@ confinement: devmode # use 'strict' once you have the right plugs and slots
 
 apps:
   cardsorter:
+    extensions: [gnome-3-28]
     command: bin/sommelier run-exe
     environment:
       RUN_EXE: C:\path\to\installed\executable.exe
