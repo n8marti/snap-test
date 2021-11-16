@@ -10,10 +10,39 @@ confinement: devmode # use 'strict' once you have the right plugs and slots
 
 apps:
   cardsorter:
-    command: opt/wine-stable/bin/wine64 opt/bin/cardsorter
+    command: bin/sommelier run-exe
+    environment:
+      RUN_EXE: C:\path\to\installed\executable.exe
+      # INSTALL_URL: http://example.com/installer.exe
+      INSTALL_EXE: $SNAP_DATA/setup.exe
+      INSTALL_FLAGS: /silent # optional commandline flags to pass to the installer
+    plugs:
+      - home
+      - network
 
   wine:
-    command: opt/wine-stable/bin/wine64
+    extensions: [gnome-3-28]
+    command: bin/sommelier
+    plugs:
+      - home
+      - network
+
+  winetricks:
+    extensions: [gnome-3-28]
+    command: bin/sommelier winetricks
+    plugs:
+      - home
+      - network
+
+plugs:
+  wine-runtime:
+    interface: content
+    target: $SNAP/wine-runtime
+    default-provider: wine-platform-runtime
+  wine-6-stable: # number must match the number in default-provider
+    interface: content
+    target: $SNAP/wine-platform
+    default-provider: wine-platform-6-stable # must be a valid snap
 
 parts:
   cardsorter:
@@ -21,17 +50,14 @@ parts:
     source: .
     build-packages:
       - unzip
-      - wine-stable
-    # build-snaps:
-    #   - wine-platform-6-stable
     override-build: |
-      # Add 32-bit arch for wine.
-      dpkg --add-architecture i386
-      apt-get update --yes
-      apt-get install wine32 --yes
-
-      # Run Setup.
       unzip CardSorterWPF20211111.zip
-      wine64 setup.exe /s /v/qn
-    stage-snaps:
-      - wine-platform-6-stable
+    organize:
+      setup.exe: $SNAP_DATA/setup.exe
+    stage:
+      - -*.zip
+
+  sommelier-core:
+    plugin: make
+    source: https://github.com/snapcrafters/sommelier-core.git
+    source-branch: "1.0"
