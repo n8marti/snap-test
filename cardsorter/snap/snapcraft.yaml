@@ -52,8 +52,8 @@ parts:
       - unzip
     override-build: |
       unzip CardSorterWPF20211111.zip
-    organize:
-      setup.exe: $SNAP_DATA/setup.exe
+    # organize:
+    #   setup.exe: $SNAP_DATA/setup.exe
     stage:
       - -*.zip
 
