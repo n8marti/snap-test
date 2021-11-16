@@ -14,7 +14,7 @@ apps:
     environment:
       RUN_EXE: C:\path\to\installed\executable.exe
       # INSTALL_URL: http://example.com/installer.exe
-      INSTALL_EXE: $SNAP_DATA/setup.exe
+      INSTALL_EXE: setup.exe
       INSTALL_FLAGS: /silent # optional commandline flags to pass to the installer
     plugs:
       - home
@@ -52,6 +52,7 @@ parts:
       - unzip
     override-build: |
       unzip CardSorterWPF20211111.zip
+      snapcraftctl build
     # organize:
     #   setup.exe: $SNAP_DATA/setup.exe
     stage:
