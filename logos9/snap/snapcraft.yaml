@@ -18,8 +18,8 @@ apps:
     command: bin/sommelier run-exe
     environment:
       RUN_EXE: C:\users\$USER\Local Settings\Application Data\Logos\Logos.exe
-      INSTALL_URL: https://www.logos.com/downloads/288 # Logos9; LogosSetup.exe
-      # INSTALL_EXE: LogosSetup.exe
+      INSTALL_URL: https://downloads.logoscdn.com/LBS9/Installer/9.9.0.0011/Logos-x64.msi
+      # INSTALL_EXE: Logos-x64.msi
       INSTALL_FLAGS: /silent # optional commandline flags to pass to the installer
     plugs:
       - home
