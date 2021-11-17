@@ -1,0 +1,69 @@
+name: logos9
+base: core18
+version: '0.1'
+summary: Install and run Logos9 via wine.
+description: |
+  Install and run Logos9 via wine.
+
+grade: devel # must be 'stable' to release into candidate/stable channels
+confinement: devmode # use 'strict' once you have the right plugs and slots
+
+environment:
+  TRICKS: "corefonts ddr=gdi dotnet48 fontsmooth=rgb"
+  WINEDLLOVERRIDES: "mscoree,mshtml=" # Prevent pop-ups about Wine Mono and Wine Gecko
+
+apps:
+  logos9:
+    extensions: [gnome-3-28]
+    command: bin/sommelier run-exe
+    environment:
+      RUN_EXE: C:\users\$USER\Local Settings\Application Data\Logos\Logos.exe
+      INSTALL_URL: https://www.logos.com/downloads/288 # Logos9; LogosSetup.exe
+      # INSTALL_EXE: LogosSetup.exe
+      INSTALL_FLAGS: /silent # optional commandline flags to pass to the installer
+    plugs:
+      - home
+      - network
+
+  wine:
+    extensions: [gnome-3-28]
+    command: bin/sommelier
+    plugs:
+      - home
+      - network
+
+  winetricks:
+    extensions: [gnome-3-28]
+    command: bin/sommelier winetricks
+    plugs:
+      - home
+      - network
+
+plugs:
+  wine-runtime:
+    interface: content
+    target: $SNAP/wine-runtime
+    default-provider: wine-platform-runtime
+  wine-6-stable: # number must match the number in default-provider
+    interface: content
+    target: $SNAP/wine-platform
+    default-provider: wine-platform-6-stable # must be a valid snap
+
+parts:
+  # cardsorter:
+  #   plugin: dump
+  #   source: .
+    # build-packages:
+    #   - unzip
+    # override-build: |
+    #   unzip CardSorterWPF20211111.zip
+    #   snapcraftctl build
+    # organize:
+    #   setup.exe: $SNAP_DATA/setup.exe
+    # stage:
+    #   - -*.zip
+
+  sommelier-core:
+    plugin: make
+    source: https://github.com/snapcrafters/sommelier-core.git
+    source-branch: "1.0"
