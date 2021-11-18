@@ -57,7 +57,7 @@ parts:
 
   hooks:
     plugin: dump
-    source: ./logos9/hooks/
+    source: hooks/
     organize:
       "*": sommelier/hooks/
     stage:
