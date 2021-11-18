@@ -9,7 +9,7 @@ grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: devmode # use 'strict' once you have the right plugs and slots
 
 environment:
-  TRICKS: "corefonts ddr=gdi dotnet48 fontsmooth=rgb"
+  TRICKS: "corefonts ddr=gdi dotnet472 fontsmooth=rgb"
   WINEDLLOVERRIDES: "mscoree,mshtml=" # Prevent pop-ups about Wine Mono and Wine Gecko
 
 apps:
@@ -17,7 +17,7 @@ apps:
     extensions: [gnome-3-28]
     command: bin/sommelier run-exe
     environment:
-      RUN_EXE: C:\users\$USER\Local Settings\Application Data\Logos\Logos.exe
+      RUN_EXE: "C:/users/$USER/Local Settings/Application Data/Logos/Logos.exe"
       INSTALL_URL: https://downloads.logoscdn.com/LBS9/Installer/9.9.0.0011/Logos-x64.msi
       # INSTALL_EXE: Logos-x64.msi
       INSTALL_FLAGS: /silent # optional commandline flags to pass to the installer
@@ -50,20 +50,15 @@ plugs:
     default-provider: wine-platform-6-stable # must be a valid snap
 
 parts:
-  # cardsorter:
-  #   plugin: dump
-  #   source: .
-    # build-packages:
-    #   - unzip
-    # override-build: |
-    #   unzip CardSorterWPF20211111.zip
-    #   snapcraftctl build
-    # organize:
-    #   setup.exe: $SNAP_DATA/setup.exe
-    # stage:
-    #   - -*.zip
-
   sommelier-core:
     plugin: make
     source: https://github.com/snapcrafters/sommelier-core.git
-    source-branch: "1.0"
+    source-branch: "1.0" # omit to use "master"
+
+  hooks:
+    plugin: dump
+    source: logos9/hooks/
+    organize:
+      "*": sommelier/hooks/
+    stage:
+      - sommelier
