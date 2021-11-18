@@ -1,9 +1,6 @@
 #!/bin/bash
 
 # Use local Logos-x64.msi in user Downloads folder if present.
-
-dl_dir=$(sudo -u $USER xdg-user-dir DOWNLOAD)
-echo "DL_DIR1: $dl_dir"
 dl_dir=$(xdg-user-dir DOWNLOAD)
 echo "DL_DIR2: $dl_dir"
 if [[ -e "${dl_dir}/Logos-x64.msi" ]]; then
