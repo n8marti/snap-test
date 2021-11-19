@@ -43,10 +43,12 @@ plugs:
     interface: content
     target: $SNAP/wine-runtime
     default-provider: wine-platform-runtime
-  wine-6-stable: # number must match the number in default-provider
+  # wine-6-stable: # number must match the number in default-provider
+  wine-6-staging: # need >=6.6 for dotnet472; stable only at 6.0.2 on 2021-11-19
     interface: content
     target: $SNAP/wine-platform
-    default-provider: wine-platform-6-stable # must be a valid snap
+    # default-provider: wine-platform-6-stable # must be a valid snap
+    default-provider: wine-platform-6-staging # see plug comment above
 
 parts:
   sommelier-core:
