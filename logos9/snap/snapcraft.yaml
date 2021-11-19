@@ -57,10 +57,10 @@ parts:
     source: https://github.com/n8marti/sommelier-core.git # use own repo until PR#26 is merged
     # source-branch: "1.0" # omit to use "master"
 
-  hooks:
-    plugin: dump
-    source: hooks/
-    organize:
-      "*": sommelier/hooks/
-    stage:
-      - sommelier
+  # hooks: # not needed while using my own repo
+  #   plugin: dump
+  #   source: hooks/
+  #   organize:
+  #     "*": sommelier/hooks/
+  #   stage:
+  #     - sommelier
