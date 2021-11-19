@@ -9,7 +9,7 @@ grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: devmode # use 'strict' once you have the right plugs and slots
 
 environment:
-  TRICKS: "corefonts ddr=gdi dotnet472 fontsmooth=rgb"
+  TRICKS: "dotnet472 corefonts ddr=gdi fontsmooth=rgb"
   WINEDLLOVERRIDES: "mscoree,mshtml=" # Prevent pop-ups about Wine Mono and Wine Gecko
 
 apps:
@@ -19,7 +19,6 @@ apps:
     environment:
       RUN_EXE: "C:/users/$USER/Local Settings/Application Data/Logos/Logos.exe"
       INSTALL_URL: https://downloads.logoscdn.com/LBS9/Installer/9.9.0.0011/Logos-x64.msi
-      # INSTALL_EXE: Logos-x64.msi
       INSTALL_FLAGS: /silent # optional commandline flags to pass to the installer
     plugs:
       - home
