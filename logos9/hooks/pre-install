@@ -9,3 +9,13 @@ if [[ -e "${dl_dir}/Logos-x64.msi" ]]; then
     # Set INSTALL_EXE.
     export INSTALL_EXE="${dl_dir}/Logos-x64.msi"
 fi
+
+# Remove mscoree from WINEDLLOVERRIDES to allow Logos9 to run.
+#    (It's still needed before this point for wineprefix setup, though.)
+export WINEDLLOVERRIDES="mshtml="
+# Add winemenubuilder override to avoid changing filetype associations.
+# export WINEDLLOVERRIDES="mshtml=,winemenubuilder.exe=d"
+
+# Make registry change to block winemenubuilder rather than polluting the environement.
+"${WINELOADER}" reg add "HKCU\\Software\\Wine\\DllOverrides" \
+    /v winemenubuilder.exe /t REG_SZ /d '' /f
