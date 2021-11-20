@@ -2,7 +2,6 @@
 
 # Use local Logos-x64.msi in user Downloads folder if present.
 dl_dir=$(xdg-user-dir DOWNLOAD)
-echo "DL_DIR2: $dl_dir"
 if [[ -e "${dl_dir}/Logos-x64.msi" ]]; then
     # Unset INSTALL_URL from snapcraft.yaml.
     export INSTALL_URL=
@@ -13,9 +12,3 @@ fi
 # Remove mscoree from WINEDLLOVERRIDES to allow Logos9 to run.
 #    (It's still needed before this point for wineprefix setup, though.)
 export WINEDLLOVERRIDES=$(echo $WINEDLLOVERRIDES | sed -r 's/[,;]?mscoree[,;]?//')
-# Add winemenubuilder override to avoid changing filetype associations.
-# export WINEDLLOVERRIDES="mshtml=,winemenubuilder.exe=d"
-
-# Make registry change to block winemenubuilder rather than polluting the environement.
-# "${WINELOADER}" reg add "HKCU\\Software\\Wine\\DllOverrides" \
-#     /v winemenubuilder.exe /t REG_SZ /d '' /f
