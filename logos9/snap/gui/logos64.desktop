@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Logos Bible Software (64-bit)
+Comment=Launches Logos Bible Software (64-bit snap package)
+#Exec=env WINEPREFIX="/home/nate/.wine-logos64" /usr/bin/wine64 "/home/nate/.wine-logos64/drive_c/users/nate/Local Settings/Application Data/Logos/Logos.exe"
+Exec=logos9
+Icon=${SNAP}/meta/gui/logos9-icon-180.png
+Terminal=false
+Type=Application
+Categories=Education;
+StartupWMClass=logos.exe
