@@ -44,11 +44,11 @@ plugs:
     target: $SNAP/wine-runtime
     default-provider: wine-platform-runtime
   # wine-6-stable: # number must match the number in default-provider
-  wine-6-staging: # need >=6.6 for dotnet472; stable only at 6.0.2 on 2021-11-19
+  wine-6-staging: # need >=6.6 for dotnet48; stable only at 6.0.2 on 2021-11-19
     interface: content
     target: $SNAP/wine-platform
     # default-provider: wine-platform-6-stable # must be a valid snap
-    default-provider: wine-platform-6-staging # see plug comment above
+    default-provider: wine-platform-6-staging # need >=6.6 for dotnet48; stable only at 6.0.2 on 2021-11-19
 
 parts:
   sommelier-core:
@@ -56,6 +56,10 @@ parts:
     # source: https://github.com/snapcrafters/sommelier-core.git
     source: https://github.com/n8marti/sommelier-core.git # use own repo until PR#26 is merged
     # source-branch: "1.0" # omit to use "master"
+    override-prime: |
+      snapcraftctl prime
+      # Remove annoying yad dialog for MSI install.
+      sed -r 's|(yes.*Installing .*EXE_NAME.*)|# \1|' bin/sommelier
 
   hooks:
     plugin: dump
