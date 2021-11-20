@@ -6,15 +6,20 @@
     /v Version /t REG_SZ /d vista /f
 
 # Symlink to $LOGOS_DATA.
+#   NOTE: $HOME for a snap is set to $HOME/snap/logos9/current,
+#     have to be explicit for real $HOME.
 logos_win_path="drive_c/users/$USER/Local Settings/Application Data/Logos"
-LOGOS_DATA="$HOME/.logos-data"
+LOGOS_DATA="/home/$USER/.logos-data"
 mkdir -p "$LOGOS_DATA"
-LOGOS32_FOLDER="$HOME/.wine-logos/${logos_win_path}"
+LOGOS32_FOLDER="/home/$USER/.wine-logos/${logos_win_path}"
 LOGOS_SNAP_FOLDER="${WINEPREFIX}/${logos_win_path}"
 CONTENT_DIRS=( "Data" "Documents" "Users" )
 prefix_dirs=( "$LOGOS32_FOLDER" "$LOGOS_SNAP_FOLDER" )
 for c in "${CONTENT_DIRS[@]}"; do
     for p in "${prefix_dirs[@]}"; do
+        if [[ ! -d "$p" ]]; then
+            continue
+        fi
         rm -rf "${p}/${c}"
         ln -s "$LOGOS_DATA/${c}" "${p}/${c}"
     done
