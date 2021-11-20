@@ -59,7 +59,7 @@ parts:
     override-prime: |
       snapcraftctl prime
       # Remove annoying yad dialog for MSI install.
-      sed -r 's|(yes.*Installing .*EXE_NAME.*)|# \1|' bin/sommelier
+      sed -r -i 's|(yes.*Installing .*EXE_NAME.*)|# \1|' bin/sommelier
 
   hooks:
     plugin: dump
