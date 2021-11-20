@@ -9,7 +9,7 @@ grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: devmode # use 'strict' once you have the right plugs and slots
 
 environment:
-  TRICKS: "dotnet472 corefonts ddr=gdi fontsmooth=rgb"
+  TRICKS: "dotnet48 corefonts ddr=gdi fontsmooth=rgb"
   WINEDLLOVERRIDES: "mscoree,mshtml=" # Prevent pop-ups about Wine Mono and Wine Gecko
 
 apps:
