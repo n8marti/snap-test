@@ -10,7 +10,7 @@ confinement: devmode # use 'strict' once you have the right plugs and slots
 
 environment:
   TRICKS: "dotnet48 corefonts ddr=gdi fontsmooth=rgb"
-  WINEDLLOVERRIDES: "mscoree;mshtml=" # Prevent pop-ups about Wine Mono and Wine Gecko
+  WINEDLLOVERRIDES: "mscoree,mshtml=" # Prevent pop-ups about Wine Mono and Wine Gecko
 
 apps:
   logos9:
