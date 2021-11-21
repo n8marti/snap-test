@@ -8,7 +8,8 @@
 # Symlink to $LOGOS_DATA.
 #   NOTE: $HOME for a snap is set to $HOME/snap/logos9/current,
 #     have to be explicit for real $HOME.
-logos_win_path="drive_c/users/$USER/Local Settings/Application Data/Logos"
+# logos_win_path="drive_c/users/$USER/Local Settings/Application Data/Logos"
+logos_win_path=$(dirname $(winepath -u "$RUN_EXE"))
 LOGOS_DATA="/home/$USER/.logos-data"
 mkdir -p "$LOGOS_DATA"
 LOGOS32_FOLDER="/home/$USER/.wine-logos/${logos_win_path}"
