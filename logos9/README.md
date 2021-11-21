@@ -26,8 +26,8 @@ or find it in your apps menu.
   - wine-platform-6-staging [376 MB]
   - wine-platform-runtime [363 MB]
 #### wine installs [130 MB]
-- corefonts [10 MB]
-- dotnet48 (dotNetFx40 + dotNetFx48) [120 MB]
+- corefonts (11 total) [4 MB]
+- dotnet48 [120 MB] (dotNetFx40 [48 MB]+ dotNetFx48 [69 MB])
 #### Logos installer [217 MB or 450 MB]
 - Logos-x64.msi [217 MB or 450 MB]
   - Should be 217 MB, but nethogs reports ~450 MB.
