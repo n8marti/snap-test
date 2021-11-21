@@ -13,6 +13,8 @@ sudo snap install --devmode --dangerous ./logos9_0.1_amd64.snap
 ### Run app (installs Logos and dependencies on 1st run [1.4 to 1.6 GB])
 ```bash
 logos9
+# OR
+WINEDEBUG=1 SOMMELIER_DEBUG=1 logos9 # if you really want to see what's going on
 ```
 or find it in your apps menu.
 
