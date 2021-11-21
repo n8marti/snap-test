@@ -5,23 +5,41 @@
 "${WINELOADER}" reg add "HKCU\\Software\\Wine\\AppDefaults\\LogosIndexer.exe" \
     /v Version /t REG_SZ /d vista /f
 
-# Symlink to $LOGOS_DATA.
+# If ~/.logos-data exists, ask user if they want to link to it.
 #   NOTE: $HOME for a snap is set to $HOME/snap/logos9/current,
 #     have to be explicit for real $HOME.
-# logos_win_path="drive_c/users/$USER/Local Settings/Application Data/Logos"
-logos_win_path=$(dirname $(winepath -u "$RUN_EXE"))
 LOGOS_DATA="/home/$USER/.logos-data"
-mkdir -p "$LOGOS_DATA"
-LOGOS32_FOLDER="/home/$USER/.wine-logos/${logos_win_path}"
-LOGOS_SNAP_FOLDER="${WINEPREFIX}/${logos_win_path}"
-CONTENT_DIRS=( "Data" "Documents" "Users" )
-prefix_dirs=( "$LOGOS32_FOLDER" "$LOGOS_SNAP_FOLDER" )
-for c in "${CONTENT_DIRS[@]}"; do
-    for p in "${prefix_dirs[@]}"; do
-        if [[ ! -d "$p" ]]; then
-            continue
-        fi
-        rm -rf "${p}/${c}"
-        ln -s "$LOGOS_DATA/${c}" "${p}/${c}"
-    done
-done
+LOGOS_INSTALL_DIR=$(find "$SNAP_USER_COMMON" -name Logos -type d)
+if [[ -d "$LOGOS_DATA" ]]; then
+    yad --title="Use existing folder?" --width=400 --center --auto-kill \
+        --button=gtk-no:1 --button=gtk-yes:0 \
+        --text="You have a Logos data folder at $LOGOS_DATA. Link to it for this installation?"
+    use_logos_data=$?
+    if [[ $use_logos_data -eq 0 ]]; then
+        # Symlink to $LOGOS_DATA.
+        content_dirs=( "Data" "Documents" "Users" )
+        for d in "${content_dirs[@]}"; do
+            rm -rf "${LOGOS_INSTALL_DIR}/${d}"
+            ln -s "$LOGOS_DATA/${d}" "${LOGOS_INSTALL_DIR}/${d}"
+        done
+    fi
+fi
+
+# alt_logos_win_path="drive_c/users/$USER/Local Settings/Application Data/Logos"
+# logos_win_path="drive_c/users/$USER/AppData/Local/Logos"
+# LOGOS_SNAP_FOLDER=$(dirname $(winepath -u "$RUN_EXE"))
+# LOGOS_DATA="/home/$USER/.logos-data"
+# mkdir -p "$LOGOS_DATA"
+# LOGOS32_FOLDER_ALT="/home/$USER/.wine-logos/${alt_logos_win_path}"
+# LOGOS32_FOLDER=
+# CONTENT_DIRS=( "Data" "Documents" "Users" )
+# prefix_dirs=( "$LOGOS32_FOLDER" "$LOGOS_SNAP_FOLDER" )
+# for c in "${CONTENT_DIRS[@]}"; do
+#     for p in "${prefix_dirs[@]}"; do
+#         if [[ ! -d "$p" ]]; then
+#             continue
+#         fi
+#         rm -rf "${p}/${c}"
+#         ln -s "$LOGOS_DATA/${c}" "${p}/${c}"
+#     done
+# done
