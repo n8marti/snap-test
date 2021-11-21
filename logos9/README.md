@@ -2,8 +2,7 @@
 ```bash
 rsync -r -t -v --progress -u --partial -s rsync://<ServerIP>/snaps/logos9_0.1_amd64.snap .
 ```
-or use grsync with source as:
-rsync://<ServerIP>/snaps/logos9_0.1_amd64.snap
+or use grsync with source as: "rsync://<ServerIP>/snaps/logos9_0.1_amd64.snap"
 and your preferred destination.
 
 ### Install package
@@ -17,6 +16,7 @@ logos9
 ```
 or find it in your apps menu.
 
+### Dependencies
 #### snap packages [1072 MB]:
 - logos9 [<1 MB]
   - snapd [34 MB]
