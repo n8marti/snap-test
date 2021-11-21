@@ -9,6 +9,6 @@ if [[ -e "${dl_dir}/Logos-x64.msi" ]]; then
     export INSTALL_EXE="${dl_dir}/Logos-x64.msi"
 fi
 
-# Remove mscoree from WINEDLLOVERRIDES to allow Logos9 to run.
-#    (It's still needed before this point for wineprefix setup, though.)
-export WINEDLLOVERRIDES=$(echo $WINEDLLOVERRIDES | sed -r 's/[,;]?mscoree[,;]?//')
+# # Remove mscoree from WINEDLLOVERRIDES to allow Logos9 to run.
+# #    (It's still needed before this point for wineprefix setup, though.)
+# export WINEDLLOVERRIDES=$(echo $WINEDLLOVERRIDES | sed -r 's/[,;]?mscoree[,;]?//')
