@@ -32,6 +32,13 @@ apps:
       - home
       - network
 
+  winecfg:
+    extensions: [gnome-3-28]
+    command: wine-platform/wine-staging/bin/winecfg
+    plugs:
+      - home
+      # - network
+
   winetricks:
     extensions: [gnome-3-28]
     command: bin/sommelier winetricks
