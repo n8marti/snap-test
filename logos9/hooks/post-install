@@ -10,7 +10,7 @@
 #     have to be explicit for real $HOME.
 LOGOS_DATA="/home/$USER/.logos-data"
 LOGOS_INSTALL_DIR=$(find "$SNAP_USER_COMMON" -name Logos -type d | grep -v Faithlife)
-if [[ -d "$LOGOS_DATA" ]]; then
+if [[ -d "$LOGOS_DATA" || -L "$LOGOS_DATA" ]]; then
     yad --title="Use existing folder?" --width=400 --center --auto-kill \
         --button=gtk-no:1 --button=gtk-yes:0 \
         --text="You have a Logos data folder at $LOGOS_DATA. Link to it for this installation?"
