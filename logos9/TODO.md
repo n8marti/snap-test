@@ -1,0 +1,2 @@
+- Don't let yad dialogs stay always on top
+- Logos recognizes user account from ~/.logos-data, but not downloaded resources
