@@ -25,6 +25,12 @@ apps:
       - home
       - network
 
+  init:
+    extensions: [gnome-3-28]
+    command: bin/sommelier
+    environment:
+      INIT: '1'
+
   indexer:
     extensions: [gnome-3-28]
     command: bin/sommelier run-exe
@@ -77,6 +83,8 @@ parts:
       sed -r -i 's|(.*INSTALL_YAD_PID)|# \1|g' bin/sommelier
       # Don't let yad dialogs stay always-on-top.
       sed -r -i 's|(yad.*) --on-top|\1|g' bin/sommelier
+      # Add init-only command.
+      sed -r 's|(\s+)(init_wine)|\1\2\n\1if [[ $INIT == '1' ]]; then exit 0; fi|' bin/sommelier
 
   hooks:
     plugin: dump
