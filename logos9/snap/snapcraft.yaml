@@ -84,7 +84,7 @@ parts:
       # Don't let yad dialogs stay always-on-top.
       sed -r -i 's|(yad.*) --on-top|\1|g' bin/sommelier
       # Add init-only command.
-      sed -r -i 's|(\s+)(init_wine)|\1\2\n\1if [[ $INIT == '1' ]]; then exit 0; fi|' bin/sommelier
+      sed -r -i 's|(\s+)(init_wine)$|\1\2\n\1if [[ $INIT == '1' ]]; then exit 0; fi|' bin/sommelier
 
   hooks:
     plugin: dump
