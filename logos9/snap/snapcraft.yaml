@@ -25,6 +25,12 @@ apps:
       - home
       - network
 
+  indexer:
+    extensions: [gnome-3-28]
+    command: bin/sommelier run-exe
+    environment:
+      RUN_EXE: "C:/users/$USER/AppData/Local/Logos/System/LogosIndexer.exe"
+
   wine:
     extensions: [gnome-3-28]
     command: bin/sommelier
@@ -35,8 +41,8 @@ apps:
   winecfg:
     extensions: [gnome-3-28]
     command: bin/sommelier winecfg
-    plugs:
-      - home
+    # plugs:
+      # - home
       # - network
 
   winetricks:
