@@ -1,1 +1,4 @@
 - Logos recognizes user account from ~/.logos-data, but not downloaded resources
+- logos9.indexer needs:
+  - /user:<logosuserprofile> /lang:<logosuserlang>
+  - /user:r5bcyw1q.bdw /lang:fr-FR
