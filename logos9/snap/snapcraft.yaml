@@ -34,7 +34,7 @@ apps:
 
   winecfg:
     extensions: [gnome-3-28]
-    command: wine-platform/wine-staging/bin/winecfg
+    command: bin/sommelier winecfg
     plugs:
       - home
       # - network
