@@ -5,7 +5,7 @@
 export WINEDLLOVERRIDES=$(echo $WINEDLLOVERRIDES | sed -r 's/[,;]?mscoree[,;]?//')
 
 # Get user ID and Language info.
-# LOGOS_INSTALL_DIR=$(find "$SNAP_USER_COMMON" -name Logos -type d | grep -v Faithlife)
-# metadata="${LOGOS_INSTALL_DIR}/Users/UserMetadata"
-# export LOGOS_USER_ID=$(cat "$metadata" | jq .userMetadatas[0].id)
-# export LOGOS_USER_LANG=$(grep 'ResourceTitleLanguage' "${SNAP_USER_COMMON}/.wine/user.reg" | awk -F= '{print $2}' | tr -d '"')
+LOGOS_INSTALL_DIR=$(find "$SNAP_USER_COMMON" -name Logos -type d | grep -v Faithlife)
+metadata="${LOGOS_INSTALL_DIR}/Users/UserMetadata"
+export LOGOS_USER_ID=$(cat "$metadata" | jq .userMetadatas[0].id)
+export LOGOS_USER_LANG=$(grep 'ResourceTitleLanguage' "${SNAP_USER_COMMON}/.wine/user.reg" | awk -F= '{print $2}' | tr -d '"')
