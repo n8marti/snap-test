@@ -35,3 +35,27 @@ or find it in your apps menu.
   - Should be 217 MB, but nethogs reports ~450 MB.
 - Snap installer will use ~/Downloads/Logos-x64.msi if it exists, otherwise it
   will download this one: https://downloads.logoscdn.com/LBS9/Installer/9.9.0.0011/Logos-x64.msi
+
+### Debugging
+Get full debugging info with these ENV variables:
+```bash
+WINEDEBUG=1 SOMMELIER_DEBUG=1 logos9 # if you really want to see what's going on
+```
+However, the sommelier script sets certain environment variables at runtime, so
+it may not work to override them like this:
+```bash
+WINEDLLOVERRIDES= logos9
+```
+Another route is to skip the sommelier script and use the logos9.wine subcommand
+directly:
+```bash
+cd ~/snap/logos9/common/.wine/drive_c/users/<user>/AppData/Local/Logos
+WINEDLLOVERRIDES= logos9.wine Logos.exe
+```
+
+### logos9 snap subcommands
+```bash
+logos9.wine
+logos9.winecfg
+logos9.winetricks # CLI only. It fails if no args passed because of mis-linked yad executable
+```
