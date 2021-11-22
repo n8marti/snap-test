@@ -33,7 +33,7 @@ apps:
 
   indexer:
     extensions: [gnome-3-28]
-    command: bin/sommelier run-exe "/user:$LOGOS_USER_ID" "/lang:$LOGOS_USER_LANG"
+    command: bin/sommelier run-exe /user:$LOGOS_USER_ID /lang:$LOGOS_USER_LANG
     environment:
       LOGOS_USER_ID: $(cat "$metadata" | jq .userMetadatas[0].id)
       LOGOS_USER_LANG: $(grep 'ResourceTitleLanguage' "${SNAP_USER_COMMON}/.wine/user.reg" | awk -F= '{print $2}' | tr -d '"')
