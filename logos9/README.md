@@ -53,9 +53,11 @@ cd ~/snap/logos9/common/.wine/drive_c/users/<user>/AppData/Local/Logos
 WINEDLLOVERRIDES= logos9.wine Logos.exe
 ```
 
-### logos9 snap subcommands
+### logos9 snap commands
 ```bash
+logos9              # configure wine; install Logos.exe; run Logos.exe
+logos9.indexer      # force-run LogosIndexer.exe
 logos9.wine
 logos9.winecfg
-logos9.winetricks # CLI only. It fails if no args passed because of mis-linked yad executable
+logos9.winetricks   # CLI only; fails if no args passed because of mis-linked yad executable
 ```
