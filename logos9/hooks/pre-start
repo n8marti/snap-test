@@ -2,4 +2,4 @@
 
 # Remove mscoree from WINEDLLOVERRIDES to allow Logos9 to run.
 #    (It's still needed before this point for wineprefix setup, though.)
-export WINEDLLOVERRIDES=$(echo $WINEDLLOVERRIDES | sed -r 's/[,;]?mscoree[,;]?//')
+# export WINEDLLOVERRIDES=$(echo $WINEDLLOVERRIDES | sed -r 's/[,;]?mscoree[,;]?//')
