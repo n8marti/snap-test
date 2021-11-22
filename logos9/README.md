@@ -59,9 +59,9 @@ WINEDLLOVERRIDES= RUN_EXE="${SNAP_USER_COMMON}/.wine/drive_c/users/$USER/AppData
 
 ### logos9 snap commands
 ```bash
-logos9              # configure wine; install Logos.exe; run Logos.exe
+logos9              # initialize wine; install Logos.exe; run Logos.exe
 logos9.indexer      # run LogosIndexer.exe
-logos9.init         # initialize the wine prefix then exit
+logos9.init         # ensure that wine is initialized, then exit
 logos9.wine
 logos9.winecfg
 logos9.winetricks   # CLI only; fails if no args passed because of mis-linked yad executable
