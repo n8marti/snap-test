@@ -39,24 +39,28 @@ or find it in your apps menu.
 ### Debugging
 Get full debugging info with these ENV variables:
 ```bash
-WINEDEBUG=1 SOMMELIER_DEBUG=1 logos9 # if you really want to see what's going on
+WINEDEBUG=1 SOMMELIER_DEBUG=1 logos9
 ```
-However, the sommelier script sets certain environment variables at runtime, so
-it may not work to override them like this:
+However, the snap package sets some environment variables at runtime, so it
+doesn't work to override them like this:
 ```bash
 WINEDLLOVERRIDES= logos9
 ```
-Another route is to skip the sommelier script and use the logos9.wine subcommand
-directly:
+Instead, you need to enter into the snap's shell environment and run the command
+like this:
 ```bash
-cd ~/snap/logos9/common/.wine/drive_c/users/<user>/AppData/Local/Logos
-WINEDLLOVERRIDES= logos9.wine Logos.exe
+# Enter logos9's shell.
+snap run --shell logos9
+# Optionally cd into Logos.exe's parent folder first. It might fix some problems.
+cd ${SNAP_USER_COMMON}/.wine/drive_c/users/${USER}/AppData/Local/Logos
+# Run Logos.exe via sommelier script.
+WINEDLLOVERRIDES= sommelier run-exe Logos.exe
 ```
 
 ### logos9 snap commands
 ```bash
 logos9              # configure wine; install Logos.exe; run Logos.exe
-logos9.indexer      # force-run LogosIndexer.exe
+logos9.indexer      # attempt to force-run LogosIndexer.exe (but just runs Logos.exe right now)
 logos9.wine
 logos9.winecfg
 logos9.winetricks   # CLI only; fails if no args passed because of mis-linked yad executable
