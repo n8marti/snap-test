@@ -37,7 +37,7 @@ apps:
     environment:
       LOGOS_USER_ID: $(cat "$metadata" | jq .userMetadatas[0].id)
       LOGOS_USER_LANG: $(grep 'ResourceTitleLanguage' "${SNAP_USER_COMMON}/.wine/user.reg" | awk -F= '{print $2}' | tr -d '"')
-      RUN_EXE: "C:/users/$USER/AppData/Local/Logos/System/LogosIndexer.exe" "/user:$LOGOS_USER_ID" "/lang:$LOGOS_USER_LANG"
+      RUN_EXE: "C:/users/$USER/AppData/Local/Logos/System/LogosIndexer.exe" "/user:\${LOGOS_USER_ID}" "/lang:\${LOGOS_USER_LANG}"
 
   wine:
     extensions: [gnome-3-28]
