@@ -1,13 +1,17 @@
-### Download package
+### Download packages
 ```bash
+rsync -r -t -v --progress -u --partial -s rsync://<ServerIP>/snaps/wine-platform-6-logos_6.17_amd64.snap .
 rsync -r -t -v --progress -u --partial -s rsync://<ServerIP>/snaps/logos9_0.1_amd64.snap .
 ```
 or use grsync with source as: "rsync://<ServerIP>/snaps/logos9_0.1_amd64.snap"
 and your preferred destination.
 
-### Install package
+### Install wine and logos9 packages
 ```bash
+sudo snap install --dangerous ./wine-platform-6-logos_6.17_amd64.snap
 sudo snap install --devmode --dangerous ./logos9_0.1_amd64.snap
+# Manually connect platform plug (b/c of "--dangerous" flag?).
+sudo snap connect logos9:wine-6-logos wine-platform-6-logos:wine-6-logos
 ```
 
 ### Run app (installs Logos and dependencies on 1st run [1.4 to 1.6 GB])
@@ -25,7 +29,8 @@ or find it in your apps menu.
   - core18 [58 MB]
   - gnome-3-28-1804 [172 MB]
     - gtk-common-themes [68 MB]
-  - wine-platform-6-staging [376 MB]
+  - wine-platform-6-logos [361 MB]
+  - ***wine-platform-6-staging [376 MB]***
   - wine-platform-runtime [363 MB]
 #### wine installs [130 MB]
 - corefonts (11 total) [4 MB]
