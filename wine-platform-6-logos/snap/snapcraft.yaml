@@ -2,7 +2,7 @@ name: wine-platform-6-logos
 adopt-info: wine
 summary: wine platform snap, provides WINE 6 for logos9 snap
 description: |
- This snap creates a WINE stable 6 via content sharing to be used by other snaps that are using WINE.
+ This snap provides WINE 6 via content sharing to be used by Logos 9.
 
 grade: stable
 confinement: strict
@@ -17,7 +17,7 @@ slots:
     interface: content
     source:
       read:
-        - $SNAP/opt/wine-stable
+        - $SNAP/opt/wine-staging
 
 parts:
   wine:
@@ -29,7 +29,7 @@ parts:
       snapcraftctl build
 
       ARCH="$(dpkg --print-architecture)"
-      # WINE_VER="$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/ | grep wine-stable | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)"
+      # WINE_VER="$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/ | grep wine-staging | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)"
       WINE_VER="6.17"
 
       # set snap version
@@ -37,14 +37,14 @@ parts:
 
       # wget and dpkg extract the wine debs
       ## supporting binaries which are arch-specific but the same filenames in both architectures so we only install the native architecture
-      DEB_URLS="https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-${ARCH}/wine-stable_${WINE_VER}~bionic-1_${ARCH}.deb"
+      DEB_URLS="https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-${ARCH}/wine-staging_${WINE_VER}~bionic-1_${ARCH}.deb"
 
       ## wine loaders - this one is the native system architecture
-      DEB_URLS="$DEB_URLS https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-${ARCH}/wine-stable-${ARCH}_${WINE_VER}~bionic-1_${ARCH}.deb"
+      DEB_URLS="$DEB_URLS https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-${ARCH}/wine-staging-${ARCH}_${WINE_VER}~bionic-1_${ARCH}.deb"
 
       if [ "$ARCH" = "amd64" ]; then
         ## on amd64 builds we need to also bundle the i386 wine loaders
-        DEB_URLS="$DEB_URLS https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-stable-i386_${WINE_VER}~bionic-1_i386.deb"
+        DEB_URLS="$DEB_URLS https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-staging-i386_${WINE_VER}~bionic-1_i386.deb"
       fi
 
       for DEB_URL in ${DEB_URLS}; do
@@ -57,9 +57,9 @@ parts:
       done
 
       # Cleanup
-      rm -rf ${SNAPCRAFT_PART_INSTALL}/opt/wine-stable/share/applications
-      rm -rf ${SNAPCRAFT_PART_INSTALL}/opt/wine-stable/share/man
+      rm -rf ${SNAPCRAFT_PART_INSTALL}/opt/wine-staging/share/applications
+      rm -rf ${SNAPCRAFT_PART_INSTALL}/opt/wine-staging/share/man
       rm -rf ${SNAPCRAFT_PART_INSTALL}/usr
 
       # Disable winemenubuilder
-      sed -i 's/winemenubuilder.exe -a -r/winemenubuilder.exe -r/g' "${SNAPCRAFT_PART_INSTALL}"/opt/wine-stable/share/wine/wine.inf
+      sed -i 's/winemenubuilder.exe -a -r/winemenubuilder.exe -r/g' "${SNAPCRAFT_PART_INSTALL}"/opt/wine-staging/share/wine/wine.inf
