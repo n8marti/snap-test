@@ -17,7 +17,7 @@ slots:
     interface: content
     source:
       read:
-        - $SNAP/opt/wine-staging
+        - $SNAP/opt/wine-logos
 
 parts:
   wine:
@@ -63,3 +63,5 @@ parts:
 
       # Disable winemenubuilder
       sed -i 's/winemenubuilder.exe -a -r/winemenubuilder.exe -r/g' "${SNAPCRAFT_PART_INSTALL}"/opt/wine-staging/share/wine/wine.inf
+    organize:
+      opt/wine-staging: opt/wine-logos
