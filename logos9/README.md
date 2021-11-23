@@ -30,7 +30,7 @@ or find it in your apps menu.
   - gnome-3-28-1804 [172 MB]
     - gtk-common-themes [68 MB]
   - wine-platform-6-logos [361 MB]
-  - ***wine-platform-6-staging [376 MB]***
+  - *wine-platform-6-staging [376 MB]: currently not used*
   - wine-platform-runtime [363 MB]
 #### wine installs [130 MB]
 - corefonts (11 total) [4 MB]
