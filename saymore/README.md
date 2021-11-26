@@ -13,7 +13,7 @@
   - wine-platform-runtime [363 MB]
 #### wine installs [130 MB]
 - corefonts (11 total) [4 MB]
-- dotnet461 [67 MB] (dotnet461 [67 MB] + dotnet46 [65 MB])
+- dotnet48 [120 MB] (dotNetFx40 [48 MB]+ dotNetFx48 [69 MB])
 #### SayMore installer [36 MB]
 - SayMoreInstaller.*.msi [36 MB]
 - Snap installer will use ~/Downloads/SayMore.*.msi if it exists, otherwise it

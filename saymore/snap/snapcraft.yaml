@@ -17,7 +17,7 @@ architectures:
 
 environment:
   WINEDLLOVERRIDES: "$WINEDLLOVERRIDES;mscoree,mshtml=" # Prevent pop-ups about Wine Mono and Wine Gecko
-  TRICKS: "dotnet461"
+  TRICKS: "dotnet48"
 
 apps:
   saymore:
