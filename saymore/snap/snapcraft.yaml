@@ -16,7 +16,8 @@ architectures:
   - amd64
 
 environment:
-  WINEDLLOVERRIDES: "$WINEDLLOVERRIDES;mscoree,mshtml="    # Prevent pop-ups about Wine Mono and Wine Gecko
+  WINEDLLOVERRIDES: "$WINEDLLOVERRIDES;mscoree,mshtml=" # Prevent pop-ups about Wine Mono and Wine Gecko
+  TRICKS: "dotnet461"
 
 apps:
   saymore:
@@ -85,7 +86,7 @@ plugs:
     target: $SNAP/wine-runtime
     default-provider: wine-platform-runtime
 
-  wine-6-stable:
+  wine-6-staging:
     interface: content
     target: $SNAP/wine-platform
-    default-provider: wine-platform-6-stable
+    default-provider: wine-platform-6-staging
