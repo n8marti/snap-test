@@ -1,55 +1,91 @@
-
-name: test-1984
-version: '1.0'
-summary: This is a shell project for testing packaging viability.
-
+name: saymore
+title: SayMore
+version: '3.2.22'
+summary: SayMore
 description: |
-  This is a shell project for testing packaging viability.
+  SayMore
 
-grade: devel # must be 'stable' to release into candidate/stable channels
-confinement: devmode # use 'strict' once you have the right plugs and slots
+  *Note: This Windows application runs on Linux using the Wine compatibility layer.*
+grade: devel
+# icon: snap/gui/tmnationsforever.png
+
+confinement: devmode
 base: core18
+
 architectures:
   - amd64
-# layout:
+
+environment:
+  WINEDLLOVERRIDES: "$WINEDLLOVERRIDES;mscoree,mshtml="    # Prevent pop-ups about Wine Mono and Wine Gecko
 
 apps:
   saymore:
-    command: bin/saymore
-    # environment:
-    extensions:
-      - gnome-3-28
+    extensions: [ gnome-3-28 ]
+    command: bin/sommelier run-exe
+    environment:
+      RUN_EXE: "C:/Program Files/SayMore/SayMore.exe"
+      INSTALL_URL: "https://software.sil.org/downloads/r/saymore/SayMoreInstaller.${SNAP_VERSION}.msi"
+      # INSTALL_FLAGS: "/silent"
+      # SOMMELIER_VIRTDESKTOP: 1
     plugs:
-      - dotnet-runtime-50:dotnet-runtime
       - home
       - network
-      - removable-media
+      # - network-bind
+      - opengl
+      - audio-playback
+      # - joystick
+  # The wine command can be used to run applications inside the wine
+  # environment that this snap uses.
+  #
+  # For example, users can configure the wine environment of this snap
+  # by running `myapp.wine winecfg`.
+  wine:
+    extensions: [ gnome-3-28 ]
+    command: bin/sommelier
+    plugs:
+      - home
+      - network
+  # The winetricks command can be used to run winetricks inside the wine
+  # environment that this snap uses.
+  winetricks:
+    extensions: [ gnome-3-28 ]
+    command: bin/sommelier winetricks
+    plugs:
+      - network
 
 parts:
-  saymore:
-    source: https://github.com/sillsdev/saymore.git
-    source-subdir: src/SayMore/
-    plugin: dotnet
-    # dotnet-version: 4.7
-    # dotnet-runtime-version: 4.7.1
-    build-attributes:
-      - debug
-    # build-packages:
-    #   - mono-devel
-      # - wget
-    # build-snaps:
-      # - dotnet-sdk
-    override-pull: |
-      snapcraftctl pull
-      # Add ReferenceAssemblies to SayMore.csproj.
-      pkg_ref='<PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />'
-      sed -i 's|  <ItemGroup>|  <ItemGroup>\n    '"$pkg_ref"'|' src/SayMore/SayMore.csproj
-    # override-build: |
-    #   # dotnet add src/SayMore/SayMore.csproj package Microsoft.NETFramework.ReferenceAssemblies --version 1.0.2
-    #   dotnet restore src/SayMore/
-    #   dotnet build --runtime ubuntu.18.04-x64 src/SayMore/
-      # dotnet build src/SayMore
-    # stage-packages:
-    #   - mono-runtime
-    # stage-snaps:
-    #   - dotnet-runtime-50
+  # The sommelier script helps you snap Windows applications using Wine. It
+  # initializes and configures Wine and installs the Windows application.
+  sommelier-core:
+    plugin: make
+    source: https://github.com/n8marti/sommelier-core.git # use own repo for MSI installer
+    # source-branch: "1.0"
+    override-prime: |
+      snapcraftctl prime
+
+      # Don't let yad dialogs stay always-on-top.
+      sed -r -i 's|(yad.*) --on-top|\1|g' bin/sommelier
+      # Remove annoying yad dialog for interactive MSI install.
+      sed -r -i 's|(yes.*Installing .*EXE_NAME.*)|# \1|' bin/sommelier
+      sed -r -i 's|(.*INSTALL_YAD_PID)|# \1|g' bin/sommelier
+
+  hooks:
+    plugin: dump
+    source: hooks/
+    organize:
+      "*": sommelier/hooks/
+    stage:
+      - sommelier
+
+
+# These plugs are used to connect the snap to the wine runtime.
+plugs:
+  wine-runtime:
+    interface: content
+    target: $SNAP/wine-runtime
+    default-provider: wine-platform-runtime
+
+  wine-6-stable:
+    interface: content
+    target: $SNAP/wine-platform
+    default-provider: wine-platform-6-stable

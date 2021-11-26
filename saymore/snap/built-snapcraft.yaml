@@ -1,0 +1,55 @@
+
+name: test-1984
+version: '1.0'
+summary: This is a shell project for testing packaging viability.
+
+description: |
+  This is a shell project for testing packaging viability.
+
+grade: devel # must be 'stable' to release into candidate/stable channels
+confinement: devmode # use 'strict' once you have the right plugs and slots
+base: core18
+architectures:
+  - amd64
+# layout:
+
+apps:
+  saymore:
+    command: bin/saymore
+    # environment:
+    extensions:
+      - gnome-3-28
+    plugs:
+      - dotnet-runtime-50:dotnet-runtime
+      - home
+      - network
+      - removable-media
+
+parts:
+  saymore:
+    source: https://github.com/sillsdev/saymore.git
+    source-subdir: src/SayMore/
+    plugin: dotnet
+    # dotnet-version: 4.7
+    # dotnet-runtime-version: 4.7.1
+    build-attributes:
+      - debug
+    # build-packages:
+    #   - mono-devel
+      # - wget
+    # build-snaps:
+      # - dotnet-sdk
+    override-pull: |
+      snapcraftctl pull
+      # Add ReferenceAssemblies to SayMore.csproj.
+      pkg_ref='<PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />'
+      sed -i 's|  <ItemGroup>|  <ItemGroup>\n    '"$pkg_ref"'|' src/SayMore/SayMore.csproj
+    # override-build: |
+    #   # dotnet add src/SayMore/SayMore.csproj package Microsoft.NETFramework.ReferenceAssemblies --version 1.0.2
+    #   dotnet restore src/SayMore/
+    #   dotnet build --runtime ubuntu.18.04-x64 src/SayMore/
+      # dotnet build src/SayMore
+    # stage-packages:
+    #   - mono-runtime
+    # stage-snaps:
+    #   - dotnet-runtime-50

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Use local SayMoreInstaller.${SNAP_VERSION}.msi in user Downloads folder if present.
+dl_dir=$(xdg-user-dir DOWNLOAD)
+if [[ -e "${dl_dir}/SayMoreInstaller.${SNAP_VERSION}.msi" ]]; then
+    # Unset INSTALL_URL from snapcraft.yaml.
+    export INSTALL_URL=
+    # Set INSTALL_EXE.
+    export INSTALL_EXE="${dl_dir}/SayMoreInstaller.${SNAP_VERSION}.msi"
+fi
