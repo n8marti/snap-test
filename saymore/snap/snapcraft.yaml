@@ -46,6 +46,14 @@ apps:
     plugs:
       - home
       - network
+
+  winecfg:
+    extensions: [gnome-3-28]
+    command: bin/sommelier winecfg
+    # plugs:
+      # - home
+      # - network
+
   # The winetricks command can be used to run winetricks inside the wine
   # environment that this snap uses.
   winetricks:
