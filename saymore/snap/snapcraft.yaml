@@ -35,7 +35,7 @@ apps:
       - audio-playback
 
   init: # allows for copying winetricks cache before starting wine setup
-    extensions: [gnome]
+    extensions: [gnome-3-38]
     command: bin/sommelier
     environment:
       INIT: '1'
