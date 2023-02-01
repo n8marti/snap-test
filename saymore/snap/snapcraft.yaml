@@ -1,6 +1,6 @@
 name: saymore
 title: SayMore
-version: '3.2.22'
+version: '3.2.22' # matches installer version below
 summary: SayMore
 description: |
   SayMore
@@ -10,55 +10,47 @@ grade: devel
 # icon: snap/gui/tmnationsforever.png
 
 confinement: devmode
-base: core18
+base: core20
 
 architectures:
   - amd64
 
 environment:
-  WINEDLLOVERRIDES: "$WINEDLLOVERRIDES;mscoree,mshtml=" # Prevent pop-ups about Wine Mono and Wine Gecko
+  WINEDLLOVERRIDES: "$WINEDLLOVERRIDES;mscoree,mshtml=" # block Wine Mono and Wine Gecko pop-ups
   TRICKS: "dotnet48"
 
 apps:
   saymore:
-    extensions: [ gnome-3-28 ]
     command: bin/sommelier run-exe
+    extensions: [gnome-3-38]
     environment:
       RUN_EXE: "C:/Program Files (x86)/SayMore/SayMore.exe"
-      INSTALL_URL: "https://software.sil.org/downloads/r/saymore/SayMoreInstaller.${SNAP_VERSION}.msi"
+      INSTALL_URL: "https://software.sil.org/downloads/r/saymore/SayMoreInstaller.3.2.22.msi"
       # INSTALL_FLAGS: "/silent"
       # SOMMELIER_VIRTDESKTOP: 1
     plugs:
       - home
       - network
-      # - network-bind
       - opengl
       - audio-playback
-      # - joystick
-  # The wine command can be used to run applications inside the wine
-  # environment that this snap uses.
-  #
-  # For example, users can configure the wine environment of this snap
-  # by running `myapp.wine winecfg`.
+
   wine:
-    extensions: [ gnome-3-28 ]
     command: bin/sommelier
+    extensions: [gnome-3-38]
     plugs:
       - home
       - network
 
   winecfg:
-    extensions: [gnome-3-28]
     command: bin/sommelier winecfg
+    extensions: [gnome-3-38]
     # plugs:
       # - home
       # - network
 
-  # The winetricks command can be used to run winetricks inside the wine
-  # environment that this snap uses.
   winetricks:
-    extensions: [ gnome-3-28 ]
     command: bin/sommelier winetricks
+    extensions: [gnome-3-38]
     plugs:
       - network
 
@@ -67,8 +59,8 @@ parts:
   # initializes and configures Wine and installs the Windows application.
   sommelier-core:
     plugin: make
-    source: https://github.com/n8marti/sommelier-core.git # use own repo for MSI installer
-    # source-branch: "1.0"
+    source: https://github.com/snapcrafters/sommelier-core.git
+    source-branch: "1.0"
     override-prime: |
       snapcraftctl prime
 
@@ -92,9 +84,9 @@ plugs:
   wine-runtime:
     interface: content
     target: $SNAP/wine-runtime
-    default-provider: wine-platform-runtime
+    default-provider: wine-platform-runtime-core20
 
   wine-6-staging:
     interface: content
     target: $SNAP/wine-platform
-    default-provider: wine-platform-6-staging
+    default-provider: wine-platform-7-stable-core20
