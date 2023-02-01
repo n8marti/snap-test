@@ -86,7 +86,7 @@ plugs:
     target: $SNAP/wine-runtime
     default-provider: wine-platform-runtime-core20
 
-  wine-6-staging:
+  wine-7-stable:
     interface: content
     target: $SNAP/wine-platform
     default-provider: wine-platform-7-stable-core20
